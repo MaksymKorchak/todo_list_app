@@ -62,25 +62,24 @@ export default function ToDoList({tasksList, removeTask, editTask}) {
         className={classes.tabs}
       >
 
-        {tasksList.map(({id, text,index}) => (
+        {tasksList.map(({id, title}) => (
             <Tab
               onClick={(event)=>handleChange(event,id-1)}
                  className={classes.singleTab}
                  removeTask={removeTask}
                  editTask={editTask}
-                 label={text}
+                 label={title}
                  key={id}
                  id={id}
             />
           ))}
-
       </Tabs>
-      {tasksList.map(({id, text}) => (
+      {tasksList.map(({id, content}) => (
         <TabPanel
           value={value}
           key={id}
           index={id-1}
-        >{text}</TabPanel>
+        >{content}</TabPanel>
       ))}
 
     </div>

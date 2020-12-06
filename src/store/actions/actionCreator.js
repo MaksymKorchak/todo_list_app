@@ -1,9 +1,10 @@
 import {ADD_TASK, REMOVE_TASK,EDIT_TASK} from "../constants/constants";
 
-export const addTask = (id, text) => ({
+export const addTask = (id,title,content) => ({
   type: "ADD_TASK",
   id,
-  text
+  title,
+  content
 });
 
 export const removeTask = id => ({
@@ -11,8 +12,9 @@ export const removeTask = id => ({
   id
 })
 
-export const editTask=(id,text)=>({
+export const editTask=(id,title,content)=>({
   type:"EDIT_TASK",
   id,
-  text
+  title,
+  content
 })

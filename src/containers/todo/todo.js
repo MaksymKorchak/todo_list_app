@@ -3,27 +3,34 @@ import ToDoInput from "../../components/todo-input/todo-input";
 import ToDoList from "../../components/todo-list/todo-list";
 import Footer from "../../components/footer/footer";
 import {connect} from 'react-redux';
-import {addTask,removeTask} from '../../store/actions/actionCreator';
+import {addTask, removeTask} from '../../store/actions/actionCreator';
+import ToDoContentInput from "../../components/ToDoContentInput/ToDoContentInput";
 
-function Todo({tasks,addTask,removeTask}) {
+function Todo({tasks, addTask, removeTask}) {
   const [taskText, setTaskText] = useState('');
   const isTaskExist = tasks && tasks.length > 0;
+  const [contentText, setContentText] = useState('');
 
   const handleInputChange = ({target: {value}}) => {
     setTaskText(value);
   }
+  const handleContentInputChange = ({target: {value}}) => {
+    setContentText(value);
+  }
 
-  const addTasks = ({key})=>{
-    if(taskText.length>3 && key ==='Enter'){
-      addTask(tasks.length+1,taskText,false);
-      setTaskText('')
+  const addTasks = ({key}) => {
+    if (taskText.length > 3 && key === 'Enter') {
+      addTask(tasks.length + 1, taskText, contentText);
+      setTaskText('');
+      setContentText('');
     }
   }
 
   return (
     <div>
       <ToDoInput onKeyPress={addTasks} onChange={handleInputChange} value={taskText}/>
-      {isTaskExist && <ToDoList tasksList={tasks} removeTask ={removeTask}/>}
+      <ToDoContentInput onKeyPress={addTasks} onChange={handleContentInputChange} value={contentText}/>
+      {isTaskExist && <ToDoList tasksList={tasks} removeTask={removeTask}/>}
       {isTaskExist && <Footer amount={tasks.length}/>}
     </div>
   )
@@ -32,4 +39,4 @@ function Todo({tasks,addTask,removeTask}) {
 export default connect(
   state => ({
     tasks: state.tasks,
-  }),{addTask,removeTask})(Todo)
+  }), {addTask, removeTask})(Todo)
