@@ -7,6 +7,7 @@ import {addTask, removeTask,editTask} from '../../store/actions/actionCreator';
 import ToDoContentInput from "../../components/ToDoContentInput/ToDoContentInput";
 
 function Todo({tasks, addTask, removeTask,editTask}) {
+
   const [taskText, setTaskText] = useState('');
   const isTaskExist = tasks && tasks.length > 0;
   const [contentText, setContentText] = useState('');

@@ -5,7 +5,7 @@ import Todo from "./containers/todo/todo";
 function App() {
   return (
    <Fragment>
-     <Title title ="Todo App"/>
+     <Title title ="ToDoList"/>
      <Todo/>
    </Fragment>
   );
