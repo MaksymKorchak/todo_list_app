@@ -21,7 +21,7 @@ function Todo({tasks, addTask, removeTask,editTask}) {
 
   const addTasks = ({key}) => {
     if (contentText.length !==0 && taskText.length > 3 && key === 'Enter') {
-      addTask(tasks.length + 1, taskText, contentText);
+      addTask(new Date().getUTCMilliseconds(), taskText, contentText);
       setTaskText('');
       setContentText('');
     }

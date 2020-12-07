@@ -11,7 +11,7 @@ import {connect} from "react-redux";
 import {addTask, editTask, removeTask} from "../../store/actions/actionCreator";
 
 function TabPanel(props) {
-  const {children, value, index, ...other} = props;
+  const {children, value, index, id, ...other} = props;
   return (
     <div
       role="tabpanel"
@@ -21,24 +21,25 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={15}>
+        <Box p={10}>
           <Typography>{children}</Typography>
         </Box>
       )}
     </div>
   );
 }
+
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: 20,
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    height: "70vh"
+    height: "60vh"
   },
   tabs: {
     minWidth: 230,
-    borderRight: `1px solid ${theme.palette.divider}`,
+    borderRight: `1px solid ${theme.palette.divider}`
   },
 
   DeleteIcon: {
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ToDoList({tasksList, removeTask,editTask}) {
+function ToDoList({tasksList, removeTask, editTask}) {
 
   const classes = useStyles();
 
@@ -68,8 +69,8 @@ function ToDoList({tasksList, removeTask,editTask}) {
   const [TaskText, setTaskText] = useState('');
   const [editId, setEditId] = useState('');
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChange = (event, index) => {
+    setValue(index);
   };
 
   const editTodo = (id, title) => {
@@ -107,32 +108,37 @@ function ToDoList({tasksList, removeTask,editTask}) {
           aria-label="Vertical tabs example"
           className={classes.tabs}
         >
-          {tasksList.map(({id, title}) => (
+          {tasksList.map((el, index) => (
             <Tab
-              onClick={(event) => handleChange(event, id - 1)}
+              onClick={(event) => handleChange(event, index)}
               removeTask={removeTask}
               editTask={editTask}
-              label={title}
-              key={id}
-              id={id}
+              label={el.title}
+              key={el.id}
               icon={<>
                 <DeleteIcon
                   className={classes.DeleteIcon}
-                  onClick={() => removeTask(id)}/>
+                  onClick={
+                    () => {
+                      removeTask(el.id);
+                      setIsVisible(false)
+                    }
+                  }/>
                 <EditIcon
                   className={classes.EditIcon}
-                  onClick={() => editTodo(id, title)}/>
+                  onClick={() => editTodo(el.id, el.title)}/>
               </>
               }
             />
           ))}
         </Tabs>
-        {tasksList.map(({id, content}) => (
+        {tasksList.map((el, index) => (
           <TabPanel
             value={value}
-            key={id}
-            index={id - 1}>
-            <Typography variant={"h5"} align={"center"} color={"primary"}> {content}</Typography>
+            key={el.id}
+            id={el.id}
+            index={index}>
+            <Typography variant={"h5"} align={"center"} color={"primary"}> {el.content}</Typography>
           </TabPanel>
         ))}
 
