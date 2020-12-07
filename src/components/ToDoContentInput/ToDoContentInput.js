@@ -6,10 +6,11 @@ export default function ToDoContentInput({value, onChange, onKeyPress}) {
   return (
     <>
       <TextField
+       style={{marginLeft:30,width:"80%"}}
         onChange={onChange}
         value={value}
         onKeyPress={onKeyPress}
-        label="Add content here..."/>
+        label="Add Task content ..."/>
     </>
   )
 }
